@@ -21,12 +21,13 @@ import {
 	ICredentialsResponse,
 	IExecutionResponse,
 	IExecutionsCurrentSummaryExtended,
-	IPushDataExecutionFinished,
-	IPushDataNodeExecuteAfter,
-	IWorkflowDb,
+	IMenuItem,
 	INodeUi,
 	INodeUpdatePropertiesInformation,
+	IPushDataExecutionFinished,
+	IPushDataNodeExecuteAfter,
 	IUpdateInformation,
+	IWorkflowDb,
 	XYPositon,
 } from './Interface';
 
@@ -80,6 +81,7 @@ export const store = new Vuex.Store({
 			nodes: [] as INodeUi[],
 			settings: {} as IWorkflowSettings,
 		} as IWorkflowDb,
+		sidebarMenuItems: [] as IMenuItem[],
 	},
 	mutations: {
 		// Active Actions
@@ -602,6 +604,11 @@ export const store = new Vuex.Store({
 			Vue.set(state, 'nodeTypes', newNodesState);
 			state.nodeTypes = newNodesState;
 		},
+
+		addSidebarMenuItems (state, menuItems: IMenuItem[]) {
+			const updated = state.sidebarMenuItems.concat(menuItems);
+			Vue.set(state, 'sidebarMenuItems', updated);
+		},
 	},
 	getters: {
 
@@ -855,6 +862,9 @@ export const store = new Vuex.Store({
 			return workflowRunData[nodeName];
 		},
 
+		sidebarMenuItems: (state): IMenuItem[] => {
+			return state.sidebarMenuItems;
+		},
 	},
 
 });
